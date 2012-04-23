@@ -24,8 +24,6 @@ static KIFTestScenario* currentScenario = nil;
         
         if (!self.logDirectoryPath) {
             
-            NSLog(@"%@",[[NSProcessInfo processInfo] environment]);
-            
             NSString *bundlePath = [[NSBundle mainBundle] bundlePath];
             
             NSString *bundleName = [[[NSBundle mainBundle] infoDictionary] valueForKey:@"CFBundleName"];
@@ -37,8 +35,6 @@ static KIFTestScenario* currentScenario = nil;
             if (logsDirectory) {
                 logsDirectory = [logsDirectory stringByAppendingPathComponent:@"Logs"];
             }
-            
-            NSLog(@"%@",logsDirectory);
             
         }
         else{

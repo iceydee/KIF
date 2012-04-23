@@ -24,17 +24,21 @@ static KIFTestScenario* currentScenario = nil;
         
         if (!self.logDirectoryPath) {
             
+            NSLog(@"%@",[[NSProcessInfo processInfo] environment]);
+            
             NSString *bundlePath = [[NSBundle mainBundle] bundlePath];
             
             NSString *bundleName = [[[NSBundle mainBundle] infoDictionary] valueForKey:@"CFBundleName"];
             
             bundlePath = [bundlePath stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"/%@.app",bundleName] withString:@""];
             
-            logsDirectory = bundlePath;
+            logsDirectory = [NSString stringWithFormat:@"/tmp/KIF/%@",bundleName];
             
             if (logsDirectory) {
                 logsDirectory = [logsDirectory stringByAppendingPathComponent:@"Logs"];
             }
+            
+            NSLog(@"%@",logsDirectory);
             
         }
         else{

@@ -21,26 +21,31 @@ static KIFTestScenario* currentScenario = nil;
 {
     if (!fileHandle) {
         NSString *logsDirectory;
+        
         if (!self.logDirectoryPath) {
-            logsDirectory = [[NSFileManager defaultManager] createUserDirectory:NSLibraryDirectory];
+            
+            NSString *bundlePath = [[NSBundle mainBundle] bundlePath];
+            
+            NSString *bundleName = [[[NSBundle mainBundle] infoDictionary] valueForKey:@"CFBundleName"];
+            
+            bundlePath = [bundlePath stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"/%@.app",bundleName] withString:@""];
+            
+            logsDirectory = bundlePath;
+            
             if (logsDirectory) {
                 logsDirectory = [logsDirectory stringByAppendingPathComponent:@"Logs"];
             }
+            
         }
         else{
             logsDirectory = self.logDirectoryPath;
         }
         
-        
         if (![[NSFileManager defaultManager] recursivelyCreateDirectory:logsDirectory]) {
             logsDirectory = nil;
         }
         
-        NSString *dateString = [NSDateFormatter localizedStringFromDate:[NSDate date] dateStyle:NSDateFormatterMediumStyle 
-                                                              timeStyle:NSDateFormatterLongStyle];
-        dateString = [dateString stringByReplacingOccurrencesOfString:@"/" withString:@"."];
-        dateString = [dateString stringByReplacingOccurrencesOfString:@":" withString:@"."];
-        NSString *fileName = [NSString stringWithFormat:@"KIF Tests %@.junit.xml", dateString];
+        NSString *fileName = @"KIF.junit.xml";
         
         NSString *logFilePath = [logsDirectory stringByAppendingPathComponent:fileName];
         

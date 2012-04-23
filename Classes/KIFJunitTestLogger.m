@@ -22,7 +22,7 @@ static KIFTestScenario* currentScenario = nil;
     if (!fileHandle) {
         NSString *logsDirectory;
         if (!self.logDirectoryPath) {
-            logsDirectory = [[NSFileManager defaultManager] createUserDirectory:NSLibraryDirectory];
+            logsDirectory = [[NSBundle mainBundle] bundlePath];
             if (logsDirectory) {
                 logsDirectory = [logsDirectory stringByAppendingPathComponent:@"Logs"];
             }

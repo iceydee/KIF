@@ -21,17 +21,8 @@ static KIFTestScenario* currentScenario = nil;
 {
     if (!fileHandle) {
         NSString *logsDirectory;
-        
         if (!self.logDirectoryPath) {
-            
-            NSURL *bundleURL = [[NSBundle mainBundle] bundleURL];
-            bundleURL = [bundleURL URLByDeletingLastPathComponent];
-            
-            NSString *bundlePath = [NSString stringWithFormat:@"%@",bundleURL];
-            bundlePath = [bundlePath stringByReplacingOccurrencesOfString:@"file://localhost" withString:@""];
-            
-            logsDirectory = bundlePath;
-            
+            logsDirectory = [[NSFileManager defaultManager] createUserDirectory:NSLibraryDirectory];
             if (logsDirectory) {
                 logsDirectory = [logsDirectory stringByAppendingPathComponent:@"Logs"];
             }
@@ -39,6 +30,7 @@ static KIFTestScenario* currentScenario = nil;
         else{
             logsDirectory = self.logDirectoryPath;
         }
+        
         
         if (![[NSFileManager defaultManager] recursivelyCreateDirectory:logsDirectory]) {
             logsDirectory = nil;
